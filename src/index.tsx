@@ -67,10 +67,11 @@ export class LazyImage extends React.Component<Props> {
       ...imgProps
     } = this.props;
 
-    const imageClasses = classNames(className, {
-      [loadedClassName]: this.state.loaded,
-      [loadingClassName]: !this.state.loaded,
-    });
+    const imageClasses = classNames(
+      className,
+      this.state.loaded && loadedClassName,
+      !this.state.loaded && loadingClassName,
+    );
 
     return (
       <img

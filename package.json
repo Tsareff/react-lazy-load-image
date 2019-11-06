@@ -1,10 +1,17 @@
 {
-  "name": "react-lazy-load-image",
+  "name": "@tsareff/lazy-image",
   "version": "1.0.0",
   "description": "react lazy load image component",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rm -rf \"lib\" && tsc",
+    "lint": "tslint -p tsconfig.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
@@ -20,6 +27,9 @@
     "typescript"
   ],
   "author": "Tsareff",
+  "files": [
+    "lib/**/*"
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Tsareff/react-lazy-load-image/issues"
@@ -30,5 +40,9 @@
     "@types/react": "^16.9.11",
     "classnames": "^2.2.6",
     "react": "^16.11.0"
+  },
+  "devDependencies": {
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.2"
   }
 }
