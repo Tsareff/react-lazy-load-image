@@ -1,6 +1,6 @@
 {
   "name": "@tsareff/lazy-image",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "react lazy load image component",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

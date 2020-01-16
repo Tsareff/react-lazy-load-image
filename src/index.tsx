@@ -1,23 +1,24 @@
-import React from 'react';
-import classNames from 'classnames';
+import React from "react";
+import classNames from "classnames";
 
 type Props = {
   src: string;
   loadingClassName?: string;
   loadedClassName?: string;
+  options?: IntersectionObserverInit;
 } & React.ImgHTMLAttributes<HTMLImageElement>;
 
 const hasIntersectionObserver = Boolean(window.IntersectionObserver);
 
 const isIntersecting = (callback: () => void) => (
-  entries: IntersectionObserverEntry[],
+  entries: IntersectionObserverEntry[]
 ) => {
   entries.filter(e => e.isIntersecting).forEach(callback);
 };
 
 export class LazyImage extends React.Component<Props> {
   state = {
-    loaded: false,
+    loaded: false
   };
 
   private observer: IntersectionObserver | null = null;
@@ -28,7 +29,7 @@ export class LazyImage extends React.Component<Props> {
   };
 
   startLoading(imageElement: HTMLImageElement) {
-    imageElement.setAttribute('src', this.props.src);
+    imageElement.setAttribute("src", this.props.src);
   }
 
   addObserver(imageElement: HTMLImageElement) {
@@ -39,6 +40,7 @@ export class LazyImage extends React.Component<Props> {
           this.observer.disconnect();
         }
       }),
+      this.props.options
     );
 
     this.observer.observe(imageElement);
@@ -70,7 +72,7 @@ export class LazyImage extends React.Component<Props> {
     const imageClasses = classNames(
       className,
       this.state.loaded && loadedClassName,
-      !this.state.loaded && loadingClassName,
+      !this.state.loaded && loadingClassName
     );
 
     return (
