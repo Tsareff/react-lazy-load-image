@@ -1,12 +1,13 @@
 {
   "name": "@tsareff/lazy-image",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "react lazy load image component",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "rm -rf \"lib\" && tsc",
     "lint": "tslint -p tsconfig.json",
+    "test": "jest",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
@@ -35,13 +36,31 @@
     "url": "https://github.com/Tsareff/react-lazy-load-image/issues"
   },
   "homepage": "https://github.com/Tsareff/react-lazy-load-image#readme",
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/src/setupTests.ts"
+    ]
+  },
   "dependencies": {
     "@types/classnames": "^2.2.9",
     "@types/react": "^16.9.11",
     "classnames": "^2.2.6",
-    "react": "^16.11.0"
+    "react": "^16.11.0",
+    "react-dom": "^16.12.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-react": "^7.8.3",
+    "@babel/preset-typescript": "^7.8.3",
+    "@types/enzyme": "^3.10.4",
+    "@types/enzyme-adapter-react-16": "^1.0.5",
+    "@types/jest": "^25.1.1",
+    "babel-jest": "^25.1.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "jest": "^25.1.0",
     "tslint": "^5.20.1",
     "typescript": "^3.7.2"
   }
