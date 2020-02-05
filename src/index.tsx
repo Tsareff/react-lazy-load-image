@@ -18,19 +18,34 @@ const isIntersecting = (callback: () => void) => (
 
 export class LazyImage extends React.Component<Props> {
   state = {
-    loaded: false
+    loaded: false,
+    src: this.props.src
   };
 
   private observer: IntersectionObserver | null = null;
-  private elmRef = React.createRef<HTMLImageElement>();
+  elmRef = React.createRef<HTMLImageElement>();
 
   onLoad = () => {
     this.setState(() => ({ loaded: true }));
   };
 
   startLoading(imageElement: HTMLImageElement) {
-    imageElement.setAttribute("src", this.props.src);
+    imageElement.setAttribute("src", this.state.src);
   }
+
+  resolveObserving = () => {
+    const imageElement = this.elmRef.current;
+
+    if (!imageElement) {
+      return;
+    }
+
+    if (hasIntersectionObserver) {
+      this.addObserver(imageElement);
+    } else {
+      this.startLoading(imageElement);
+    }
+  };
 
   addObserver(imageElement: HTMLImageElement) {
     this.observer = new IntersectionObserver(
@@ -47,16 +62,17 @@ export class LazyImage extends React.Component<Props> {
   }
 
   componentDidMount() {
-    const imageElement = this.elmRef.current;
+    this.resolveObserving();
+  }
 
-    if (!imageElement) {
-      return;
-    }
-
-    if (hasIntersectionObserver) {
-      this.addObserver(imageElement);
-    } else {
-      this.startLoading(imageElement);
+  componentDidUpdate(prevProps: Props) {
+    if (prevProps.src !== this.props.src) {
+      this.setState(
+        {
+          src: this.props.src
+        },
+        this.resolveObserving
+      );
     }
   }
 
@@ -82,6 +98,7 @@ export class LazyImage extends React.Component<Props> {
         onLoad={this.onLoad}
         ref={this.elmRef}
         alt="cover"
+        data-testid="lazy-image"
       />
     );
   }
